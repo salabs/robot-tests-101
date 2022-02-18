@@ -5,3 +5,4 @@ report*.html
 output*.xml
 *.pyc
 *.iml
+__pycache__/

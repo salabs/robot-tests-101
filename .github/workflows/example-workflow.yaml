@@ -11,13 +11,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install Robot and Dependencies
+        shell: bash
+        run: |
+          pip3 install --upgrade \
+                  --no-cache-dir \
+                  robotframework
+
       - name: Execute tests
         run: |
-          docker run \
-            -v ${{ github.workspace }}/tests:/opt/robotframework/reports:Z \
-            -v ${{ github.workspace }}/results:/opt/robotframework/tests:Z \
-            ppodgorsek/robot-framework:latest
-              
+          robot --outputdir=results tests 
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v1
