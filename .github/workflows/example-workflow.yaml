@@ -12,14 +12,16 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Execute tests
-        uses: joonvena/robotframework-docker-action@v1.0
-        with:
-          robot_tests_dir: ${{ github.workspace }}/tests
+        run: |
+          docker run \
+            -v ${{ github.workspace }}/tests:/opt/robotframework/reports:Z \
+            -v ${{ github.workspace }}/results:/opt/robotframework/tests:Z \
+            ppodgorsek/robot-framework:latest
               
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v1
         with:
-          name: reports
-          path: ${{ github.workspace }}/reports
+          name: results
+          path: ${{ github.workspace }}/results
 
