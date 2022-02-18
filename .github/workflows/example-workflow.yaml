@@ -1,4 +1,4 @@
-name: "Example workflow for Robot Framework
+name: "Example workflow for Robot Framework"
 
 on:
   push:
