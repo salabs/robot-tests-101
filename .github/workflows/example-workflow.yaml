@@ -1,0 +1,25 @@
+name: "Example workflow for Robot Framework
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Execute tests
+        uses: joonvena/robotframework-docker-action@v1.0
+        with:
+          robot_tests_dir: ${{ github.workspace }}/tests
+              
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: reports
+          path: ${{ github.workspace }}/reports
+
