@@ -11,17 +11,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+          cache: 'npm'
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-
       - name: Install Robot and Dependencies
         shell: bash
         run: |
           pip3 install --upgrade \
                   --no-cache-dir \
-                  robotframework
+                  robotframework \
+                  robotframework-browser
+      - name: Install node deps and python deps for test running
+        run: |
+          rfbrowser init
 
       - name: Execute tests
         run: |
